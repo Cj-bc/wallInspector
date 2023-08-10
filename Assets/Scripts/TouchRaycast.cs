@@ -43,16 +43,10 @@ public class TouchRaycast : MonoBehaviour
 	var tapPosition = pointer.position.ReadValue();
 	if (m_RaycastManager.Raycast(tapPosition, m_Hits, TrackableType.PlaneWithinPolygon)) {
 	    var hit = m_Hits[0];
-	    Debug.Log($"Touched!");
 	    
-	    GameObject prefab = Instantiate(anchorPrefab);
-		
 	    if (hit.trackable is ARPlane plane) {
 		Debug.Log($"plane is touched");
 		OnTouchedOnPlane(plane, hit.pose);
-	    } else {
-		prefab.transform.SetPositionAndRotation(hit.pose.position, hit.pose.rotation);
-		prefab.AddComponent<ARAnchor>();
 	    }
 	}
     }

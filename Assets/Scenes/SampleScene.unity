@@ -311,7 +311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_RaycastManager: {fileID: 344913223}
   m_AnchorManager: {fileID: 344913224}
-  anchorPrefab: {fileID: 4354349515458546742, guid: b46e4da219cf143fe808e4211482ce7a, type: 3}
+  anchorPrefab: {fileID: 0}
   actionAsset: {fileID: -944628639613478452, guid: 4507130f97432481591bb8a496fcfca4, type: 3}
 --- !u!114 &344913226
 MonoBehaviour:
