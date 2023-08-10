@@ -59,29 +59,25 @@ public class InsideWallMesh : MonoBehaviour
 	    vertices.Add(backVertex);
 	}
 
+	var maxIndex = vertices.Count - 1;
+
 	// 壁面のtriangles:
 	// Triangleは、以下の組合せのvertexで生成する。これは、Quadを構成する2つのTriangleの法線が同じ方向を向くようにするため。
 	// 0, 1, 2; 2, 1, 3; 2, 3, 4; 4, 3, 5 ... x-1, x, x+1; x, x-1, x+1; ... n-1, n, n+1; n, n-1, 0; n, 0, 1 (n = vertiecs.Count - 1)
 	//
 	// n-1, n, 0 と n, 0, 1 だけはループで回せないので別に作る
 	var triangles = new List<int>();
-	for (int i = 1; i < vertices.Count - 2; i++) {
+	for (int i = 0; i < vertices.Count - 1; i+=2) {
 	    // Clockwise
-	    triangles.Add(i-1);
 	    triangles.Add(i);
-	    triangles.Add(i+1);
+	    triangles.Add((i+1) % maxIndex);
+	    triangles.Add((i+2) % maxIndex);
 
 	    // Counter Clockwise
-	    triangles.Add(i+1);
-	    triangles.Add(i);
-	    triangles.Add(i-2);
+	    triangles.Add((i+2) % maxIndex);
+	    triangles.Add((i+1) % maxIndex);
+	    triangles.Add((i+3) % maxIndex);
 	}
-	triangles.Add(vertices.Count - 2);
-	triangles.Add(vertices.Count - 1);
-	triangles.Add(0);
-	triangles.Add(vertices.Count - 1);
-	triangles.Add(0);
-	triangles.Add(1);
 
 	// Apply them to actual mesh
 	_mesh.Clear();
