@@ -25,6 +25,7 @@ public class InsideWallMesh : MonoBehaviour
 	}
 
 	_mesh = new Mesh();
+	_mesh.name = "InsideWall Mesh";
 	m_MeshFilter.mesh = _mesh;
     }
 
