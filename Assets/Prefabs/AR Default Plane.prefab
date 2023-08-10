@@ -4927,7 +4927,7 @@ GameObject:
   - component: {fileID: 2988499696086570426}
   - component: {fileID: 4495835442403918525}
   - component: {fileID: 5859852768366957193}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: InsideWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
