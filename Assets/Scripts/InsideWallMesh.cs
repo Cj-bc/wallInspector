@@ -83,7 +83,7 @@ public class InsideWallMesh : MonoBehaviour
 	triangles.Add(1);
 
 	// Apply them to actual mesh
-	_mesh.SetTriangles(new List<int>(), 0); // Make sure no vertices are required
+	_mesh.Clear();
 	_mesh.SetVertices(vertices);
 	_mesh.SetTriangles(triangles, 0);
     }
