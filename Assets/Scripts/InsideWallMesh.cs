@@ -35,13 +35,6 @@ public class InsideWallMesh : MonoBehaviour
 	var vertices = new List<Vector3>();
 
 
-	// Convert each plane-space points into world-space.
-	var transformationMatrix = Matrix4x4.identity;
-	transformationMatrix.SetColumn(0, transform.right);
-	transformationMatrix.SetColumn(1, transform.up);
-	transformationMatrix.SetColumn(2, transform.forward);
-	transformationMatrix.SetColumn(3, new Vector4(transform.position.x, transform.position.y, transform.position.z, 1));
-
 	/*
 	       3 o------o 1
 	       .`:    .`| 
@@ -58,7 +51,7 @@ public class InsideWallMesh : MonoBehaviour
 	 */
 	foreach (Vector2 point in plane.boundary) {
 	    // Vertex that is at the same location of <code>point</code>
-	    var frontVertex = transformationMatrix.MultiplyPoint3x4(new Vector3(point.x, 0, point.y));
+	    var frontVertex = new Vector3(point.x, 0, point.y);
 	    var backVertex = frontVertex + -(plane.normal) * depthOfWall;
 
 	    vertices.Add(frontVertex);
