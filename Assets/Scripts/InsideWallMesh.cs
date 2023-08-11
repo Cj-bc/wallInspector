@@ -38,18 +38,18 @@ public class InsideWallMesh : MonoBehaviour
 
 	Vector3 backSurfaceCenter = Vector3.zero;
 	/*
-	       3 o------o 1
+	     4,5 o------o 1,2
 	       .`:    .`| 
 	     .`  :  .`  |
 	    o------o 0  |
-	    | 2  : |    |
-	    |    o.|....o 7
-	    |  .`5 |  .`
+	    | 3  : |    |
+	    |    o.|....o 10,11
+	    |  .`78|  .`
 	    |,`    | .
-	    o------o'
-	  4         6
+	    o------o'      (78 = 7,8)
+	  6         9
 
-	  Verticesは上記のような順番で格納されている。手前の面のvertex、奥の面のvertexの順番。
+	  Verticesは上記のような順番で格納されている。手前の面のvertex、奥の面のvertex、backSurface用のvertexの順番。
 	 */
 	foreach (Vector2 point in plane.boundary) {
 	    // Meshを作成する際のvertexはMeshのローカル座標になり、グローバル座標系や <code>plane.normal</code> 等を考慮しなくていい。
@@ -59,7 +59,10 @@ public class InsideWallMesh : MonoBehaviour
 
 	    backSurfaceCenter += backVertex;
 
+	    // 側面のtriangles用のvertex
 	    vertices.Add(frontVertex);
+	    vertices.Add(backVertex);
+	    // backSurface用のvertex。flatに描画するためにvertexを分ける
 	    vertices.Add(backVertex);
 	}
 
@@ -71,22 +74,22 @@ public class InsideWallMesh : MonoBehaviour
 
 	// 壁面のtriangles:
 	// Triangleは、以下の組合せのvertexで生成する。これは、Quadを構成する2つのTriangleの法線が同じ方向を向くようにするため。
-	// 0, 1, 2; 2, 1, 3; 2, 3, 4; 4, 3, 5 ... x-1, x, x+1; x, x-1, x+1; ... n-1, n, n+1; n, n-1, 0; n, 0, 1 (n = vertiecs.Count - 1)
+	// 0, 1, 3; 3, 1, 4; 5, 2, backSurfaceCenterIdx; 3, 4, 6; ... x, x+1, x+3; x+3, x+1, x+4; x+5, x+2, backSurfaceCenterIdx; ...
 	var triangles = new List<int>();
-	for (int i = 0; i < vertices.Count - 1; i+=2) {
+	for (int i = 0; i < vertices.Count - 1; i+=3) {
 	    // 壁面のtriangle 1
 	    triangles.Add(i);
 	    triangles.Add((i+1) % vertices.Count);
-	    triangles.Add((i+2) % vertices.Count);
+	    triangles.Add((i+3) % vertices.Count);
 
 	    // 壁面のtriangle 2
-	    triangles.Add((i+2) % vertices.Count);
-	    triangles.Add((i+1) % vertices.Count);
 	    triangles.Add((i+3) % vertices.Count);
+	    triangles.Add((i+1) % vertices.Count);
+	    triangles.Add((i+4) % vertices.Count);
 
 	    // 背面のtriangles
-	    triangles.Add((i+3) % vertices.Count);
-	    triangles.Add(i+1);
+	    triangles.Add((i+5) % vertices.Count);
+	    triangles.Add(i+2);
 	    triangles.Add(backSurfaceCenterIdx);
 	}
 
