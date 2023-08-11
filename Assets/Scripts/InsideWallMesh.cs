@@ -51,9 +51,10 @@ public class InsideWallMesh : MonoBehaviour
 	  Verticesは上記のような順番で格納されている。手前の面のvertex、奥の面のvertexの順番。
 	 */
 	foreach (Vector2 point in plane.boundary) {
-	    // Vertex that is at the same location of <code>point</code>
-	    var frontVertex = new Vector3(point.x, 0, point.y);
-	    var backVertex = frontVertex + -(plane.normal) * depthOfWall;
+	    // Meshを作成する際のvertexはMeshのローカル座標になり、グローバル座標系や <code>plane.normal</code> 等を考慮しなくていい。
+	    // なのでZ軸を奥行方向とし、奥行を足すときには -forward する。
+	    var frontVertex = new Vector3(point.x, point.y, 0);
+	    var backVertex = frontVertex - Vector3.forward * depthOfWall;
 
 	    vertices.Add(frontVertex);
 	    vertices.Add(backVertex);
