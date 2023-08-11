@@ -96,6 +96,7 @@ public class InsideWallMesh : MonoBehaviour
 	_mesh.Clear();
 	_mesh.SetVertices(vertices);
 	_mesh.SetTriangles(triangles, 0);
+	_mesh.RecalculateNormals();
     }
 
     // 
