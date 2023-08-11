@@ -36,6 +36,7 @@ public class InsideWallMesh : MonoBehaviour
 	var vertices = new List<Vector3>();
 
 
+	Vector3 backSurfaceCenter = Vector3.zero;
 	/*
 	       3 o------o 1
 	       .`:    .`| 
@@ -56,11 +57,18 @@ public class InsideWallMesh : MonoBehaviour
 	    var frontVertex = new Vector3(point.x, point.y, 0);
 	    var backVertex = frontVertex - Vector3.forward * depthOfWall;
 
+	    backSurfaceCenter += backVertex;
+
 	    vertices.Add(frontVertex);
 	    vertices.Add(backVertex);
 	}
 
+	// backSurfaceCenter now represents center position of backSurface.
+	backSurfaceCenter /= vertices.Count;
+
 	var maxIndex = vertices.Count - 1;
+	// Be aware that backSurfaceCenter isn't in vertices yet intentionally.
+	int backSurfaceCenterIdx = maxIndex + 1;
 
 	// 壁面のtriangles:
 	// Triangleは、以下の組合せのvertexで生成する。これは、Quadを構成する2つのTriangleの法線が同じ方向を向くようにするため。
@@ -76,7 +84,14 @@ public class InsideWallMesh : MonoBehaviour
 	    triangles.Add((i+2) % maxIndex);
 	    triangles.Add((i+1) % maxIndex);
 	    triangles.Add((i+3) % maxIndex);
+
+	    // 背面のtriangles
+	    triangles.Add((i+3) % maxIndex);
+	    triangles.Add(i+1);
+	    triangles.Add(backSurfaceCenterIdx);
 	}
+
+	vertices.Add(backSurfaceCenter); // 壁面を作る際に考慮したくなかったのでここで追加
 
 	// Apply them to actual mesh
 	_mesh.Clear();
