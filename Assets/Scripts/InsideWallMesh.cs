@@ -64,7 +64,7 @@ public class InsideWallMesh : MonoBehaviour
 	}
 
 	// backSurfaceCenter now represents center position of backSurface.
-	backSurfaceCenter /= vertices.Count;
+	backSurfaceCenter /= plane.boundary.Length;
 
 	var maxIndex = vertices.Count - 1;
 	// Be aware that backSurfaceCenter isn't in vertices yet intentionally.
