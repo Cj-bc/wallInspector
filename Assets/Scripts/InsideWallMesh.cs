@@ -67,12 +67,12 @@ public class InsideWallMesh : MonoBehaviour
 	// 0, 1, 2; 2, 1, 3; 2, 3, 4; 4, 3, 5 ... x-1, x, x+1; x, x-1, x+1; ... n-1, n, n+1; n, n-1, 0; n, 0, 1 (n = vertiecs.Count - 1)
 	var triangles = new List<int>();
 	for (int i = 0; i < vertices.Count - 1; i+=2) {
-	    // Clockwise
+	    // 壁面のtriangle 1
 	    triangles.Add(i);
 	    triangles.Add((i+1) % maxIndex);
 	    triangles.Add((i+2) % maxIndex);
 
-	    // Counter Clockwise
+	    // 壁面のtriangle 2
 	    triangles.Add((i+2) % maxIndex);
 	    triangles.Add((i+1) % maxIndex);
 	    triangles.Add((i+3) % maxIndex);
