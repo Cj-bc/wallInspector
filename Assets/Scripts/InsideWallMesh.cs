@@ -65,8 +65,6 @@ public class InsideWallMesh : MonoBehaviour
 	// 壁面のtriangles:
 	// Triangleは、以下の組合せのvertexで生成する。これは、Quadを構成する2つのTriangleの法線が同じ方向を向くようにするため。
 	// 0, 1, 2; 2, 1, 3; 2, 3, 4; 4, 3, 5 ... x-1, x, x+1; x, x-1, x+1; ... n-1, n, n+1; n, n-1, 0; n, 0, 1 (n = vertiecs.Count - 1)
-	//
-	// n-1, n, 0 と n, 0, 1 だけはループで回せないので別に作る
 	var triangles = new List<int>();
 	for (int i = 0; i < vertices.Count - 1; i+=2) {
 	    // Clockwise
