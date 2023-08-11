@@ -72,9 +72,31 @@ public class InsideWallMesh : MonoBehaviour
 	// Be aware that backSurfaceCenter isn't in vertices yet intentionally.
 	int backSurfaceCenterIdx = vertices.Count;
 
-	// 壁面のtriangles:
-	// Triangleは、以下の組合せのvertexで生成する。これは、Quadを構成する2つのTriangleの法線が同じ方向を向くようにするため。
-	// 0, 1, 3; 3, 1, 4; 5, 2, backSurfaceCenterIdx; 3, 4, 6; ... x, x+1, x+3; x+3, x+1, x+4; x+5, x+2, backSurfaceCenterIdx; ...
+	/*
+	         o------o
+	       .`:####.`| Backface/背面
+	     .`  :##.`##|
+	    o------o####|
+	    |    :#|####|
+	    |    o.|....o
+	    |  .`  |  .`
+	    |,`    | .
+	    o------o'
+
+
+	         o------o
+	       .`#####.`| 壁面(手前側は貼らない)
+	     .`#####.`##|
+	    o------o####|
+	    |####: |####|
+	    |####o.|####o
+	    |##.`##|##.`
+	    |,#####|#.
+	    o------o'
+
+	Triangleは、以下の組合せのvertexで生成する。これは、Quadを構成する2つのTriangleの法線が同じ方向を向くようにするため。
+	0, 1, 3; 3, 1, 4; 5, 2, backSurfaceCenterIdx; 3, 4, 6; ... x, x+1, x+3; x+3, x+1, x+4; x+5, x+2, backSurfaceCenterIdx; ...
+	 */
 	var triangles = new List<int>();
 	for (int i = 0; i < vertices.Count - 1; i+=3) {
 	    // 壁面のtriangle 1
